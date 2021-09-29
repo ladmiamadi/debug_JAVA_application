@@ -98,3 +98,8 @@ anxiety
 anxiety
 cough
 blurred vision
+palpitation
+cough
+cough
+palpitation
+palpitation

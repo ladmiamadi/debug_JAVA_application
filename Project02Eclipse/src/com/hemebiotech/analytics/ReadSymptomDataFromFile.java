@@ -60,7 +60,8 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 			FileWriter writer = new FileWriter (outputFilepath);
 			
 	        for (Map.Entry<String, Integer> m : sortedReslut.entrySet()) {
-	            writer.write(m.getKey()+": "+m.getValue());
+	            writer.write(m.getKey()+": "+m.getValue()+"\n");
+	            System.out.println(m.getKey()+": "+m.getValue());
 	        }
 			writer.close();
 		} catch (IOException e) {

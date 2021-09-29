@@ -9,17 +9,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Simple brute force implementation
- *
+ * Simple brute force implementation to the interface with methods to override
+ *@author Ladmia
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
-
 	private String inputFilepath;
 	private String outputFilepath;
 	
 	/**
 	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it, one per line
+	 * @param inputFilepath a path to file with symptom strings in it, one per line
+	 * @param outputFilepath a path to file for writing symptoms in it with their occurrence
 	 */
 	public ReadSymptomDataFromFile (String inputFilepath, String outputFilepath) {
 		this.inputFilepath = inputFilepath;
@@ -27,6 +27,10 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 	
 	@Override
+	/**
+	 * @return an ordered Map of String keys and Integer values
+	 * @see TreeMap
+	 */
 	public Map<String, Integer> GetSymptoms() {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		
@@ -35,6 +39,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				BufferedReader reader = new BufferedReader (new FileReader(inputFilepath));
 				String line = reader.readLine();
 				
+				// if the symptom exists in result we increment it otherwise we add a new key to result
 				while (line != null) {
 					if(result.containsKey(line)) {
 						result.put(line, result.get(line) + 1);

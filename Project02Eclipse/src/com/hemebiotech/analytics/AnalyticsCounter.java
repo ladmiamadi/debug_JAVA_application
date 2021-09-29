@@ -8,6 +8,7 @@ public class AnalyticsCounter {
 		ReadSymptomDataFromFile symptom = new ReadSymptomDataFromFile("Project02Eclipse/symptoms.txt", "result.out");
 		
 		Map<String, Integer> orderedSymptoms = symptom.GetSymptoms();
+		
 		symptom.SetSymptoms(orderedSymptoms);
 	}
 }

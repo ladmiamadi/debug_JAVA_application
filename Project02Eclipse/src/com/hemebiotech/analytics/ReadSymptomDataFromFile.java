@@ -2,9 +2,11 @@ package com.hemebiotech.analytics;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Simple brute force implementation
@@ -12,34 +14,57 @@ import java.util.List;
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
-	private String filepath;
+	private String inputFilepath;
+	private String outputFilepath;
 	
 	/**
 	 * 
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
 	 */
-	public ReadSymptomDataFromFile (String filepath) {
-		this.filepath = filepath;
+	public ReadSymptomDataFromFile (String inputFilepath, String outputFilepath) {
+		this.inputFilepath = inputFilepath;
+		this.outputFilepath = outputFilepath;
 	}
 	
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
+	public Map<String, Integer> GetSymptoms() {
+		Map<String, Integer> result = new HashMap<String, Integer>();
 		
-		if (filepath != null) {
+		if (inputFilepath != null) {
 			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				BufferedReader reader = new BufferedReader (new FileReader(inputFilepath));
 				String line = reader.readLine();
 				
 				while (line != null) {
-					result.add(line);
+					if(result.containsKey(line)) {
+						result.put(line, result.get(line) + 1);
+					} else {
+						result.put(line, 1);
+					}
+					
 					line = reader.readLine();
 				}
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}		
-		return result;
+		}
+		
+		Map<String, Integer> sortedResult = new TreeMap<>(result);
+		return sortedResult;
+	}
+	
+	@Override
+	public void SetSymptoms(Map <String, Integer> sortedReslut) {
+		try {
+			FileWriter writer = new FileWriter (outputFilepath);
+			
+	        for (Map.Entry<String, Integer> m : sortedReslut.entrySet()) {
+	            writer.write(m.getKey()+": "+m.getValue());
+	        }
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

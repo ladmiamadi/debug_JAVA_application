@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * reads symptoms from a file and save them into a Map with their occurrences to write them in another file
  * Simple brute force implementation to the interface with methods to override
  *@author Ladmia
  */
@@ -33,8 +34,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	 */
 	public Map<String, Integer> GetSymptoms() {
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		if (inputFilepath != null) {
+
 			try {
 				BufferedReader reader = new BufferedReader (new FileReader(inputFilepath));
 				String line = reader.readLine();
@@ -53,7 +53,6 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
 		
 		Map<String, Integer> sortedResult = new TreeMap<>(result);
 		return sortedResult;
